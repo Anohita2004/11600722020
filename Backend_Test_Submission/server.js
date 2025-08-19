@@ -1,26 +1,23 @@
-// backend-test-submission/server.js
 const express = require("express");
-const Log = require("../Logging_Middleware"); // import the logger
+const Log = require("../Logging_Middleware");
 
 const app = express();
 const PORT = 3000;
 
-// test route
 app.get("/", async (req, res) => {
-  await Log("backend", "info", "route", "Root endpoint was called");
+  await Log("backend", "info", "route", "Root endpoint called");
   res.send("Hello from backend test submission!");
 });
 
-// simulate error
 app.get("/error", async (req, res) => {
   try {
-    throw new Error("Simulated error in handler");
+    throw new Error("received string, expected bool");
   } catch (err) {
     await Log("backend", "error", "handler", err.message);
-    res.status(500).send("Error logged!");
+    res.status(500).send("Error logged successfully!");
   }
 });
 
 app.listen(PORT, () => {
-  console.log(` Server running on http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
